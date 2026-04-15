@@ -14,6 +14,12 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
+# Save last command for tmux tab display
+if [ -n "$TMUX_PANE" ]; then
+    _tmux_preexec() { echo "$1" > "/tmp/tmux-last-cmd-${TMUX_PANE#%}" }
+    add-zsh-hook preexec _tmux_preexec
+fi
+
 # ssh
 export SSH_KEY_PATH="~/.ssh/rsa_id"
 
